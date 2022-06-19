@@ -1,0 +1,21 @@
+.product__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 30px 33px;
+}
+
+.list__wrapper {
+  padding: 0 0 50px 0;
+  text-align: center;
+}
+
+.btn__block {
+  margin: 25px 0 0 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .product__list {
+    justify-content: center;
+  }
+}

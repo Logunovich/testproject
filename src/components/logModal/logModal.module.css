@@ -1,0 +1,89 @@
+.modal__wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal__block {
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    width: 300px;
+    margin: 30px auto;
+    padding: 20px;
+    position: relative;
+}
+
+.modal__title {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    margin: 0 0 20px 0;
+}
+
+.modal__blocks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal__label {
+    color: gray;
+    margin: 5px 0 0 0;
+    font-size: 11px;
+}
+
+.modal__input {
+    width: 200px;
+    font-size: 15px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+.modal__input::placeholder {
+    font-size: 14px;
+    color: rgb(206, 206, 206);
+}
+
+.modal__btns {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.modal_btn {
+    margin: 0 5px;
+}
+
+.close__btn {
+    width: 30px;    
+    height: 30px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: rgb(117, 117, 117);
+}
+
+.close__btn:hover {
+    cursor: pointer;
+    color: rgb(204, 204, 204);
+}
+
+.module__error {
+    text-align: center;
+    color: red;
+}
+
+.login__info {
+    font-size: 15px;
+    color: gray;
+    text-align: center;
+    margin: 0 0 20px 0;
+}

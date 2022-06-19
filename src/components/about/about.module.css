@@ -1,0 +1,13 @@
+.about__block {
+  margin: 60px;
+  /* border: 1px solid red; */
+}
+
+.about__block p{
+  padding: 0 0 20px 0;
+  font-size: 20px;
+}
+
+.about__text {
+  padding: 0 0 50px 0;
+}

@@ -1,0 +1,58 @@
+a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  text-transform: uppercase;
+  font-weight: 300;
+
+}
+
+a:hover {
+  text-decoration: underline;
+  color: rgb(50, 50, 50);
+}
+
+.header {
+  display: flex;
+  height: 100px;
+  padding: 0 35px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-bottom: 1px solid rgb(233, 233, 233);
+  position: relative;
+}
+
+.menu__block {
+  display: flex;
+}
+
+.header__title {
+  margin: 0 50px 0 0;
+}
+
+.header__title a {
+  font-weight: bold;
+}
+
+.cart__block {
+  position: absolute;
+  right: 140px;
+  text-align: right;
+}
+
+.cart__block {
+  font-size: 14px;
+  color: rgb(163, 163, 163);
+}
+
+.product__cart {
+  color: black;
+}
+
+.price__cart {
+  color: rgb(31, 100, 31);
+}
+
+.count__price {
+  margin: 5px 0 0 0;
+}

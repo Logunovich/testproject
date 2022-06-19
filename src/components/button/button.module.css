@@ -1,0 +1,22 @@
+.cart__block button {
+  color: rgb(0, 0, 0);
+  font-weight: 300;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 5px 20px;
+  background-color: white;
+  text-transform: uppercase;
+}
+
+.cart__block button:hover {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: rgb(235, 235, 235);
+  border: 1px solid rgb(87, 87, 87);
+}
+
+.cart__block button:disabled {
+  color: rgb(212, 212, 212);
+  background-color:rgb(233, 233, 233);
+  border-color: rgb(199, 199, 199);
+}
