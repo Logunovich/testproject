@@ -1,7 +1,7 @@
 import styles from './app.module.css';
 
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import UserService from '../../services/UserService';
 import StoreService from "../../services/StoreService";
@@ -110,39 +110,37 @@ const App = () => {
   }
 
   return (
-    <Router basename='/testproject'>
-      <div className={styles.app}>
-        <Header 
-          isLogged={isLogged}
-          toggelOpenModal={toggelOpenModal}
-          toggleLogin={toggleLogin}
-          cart={cart}
-          user={user}/>
-        <Routes>
-          <Route path="/" element={<ProductList 
-                                    isLogged={isLogged}
-                                    amountProducts={amountProducts} 
-                                    products={products}
-                                    loading={loading}
-                                    newProductsLogain={newProductsLogain} 
-                                    error={error}
-                                    productsEnded={productsEnded}
-                                    onRequest={onRequest} 
-                                    addProductToCart={addProductToCart}/>} />
-          <Route path="/products/:productId" element={<ProductPage
-                                                        isLogged={isLogged}
-                                                        amountProducts={amountProducts}
-                                                        addProductToCart={addProductToCart} />} />
-          <Route path="/about" element={<About/>}/>
-          <Route path="*" element={<Page404/>}/>
-        </Routes>
-        {isModalLoginOpen ? <LogModal 
-                              toggelOpenModal={toggelOpenModal}
-                              setUser={setUser}
-                              toggleLogin={toggleLogin}/> : 
-                            null}
-      </div>
-    </Router>
+    <div className={styles.app}>
+      <Header 
+        isLogged={isLogged}
+        toggelOpenModal={toggelOpenModal}
+        toggleLogin={toggleLogin}
+        cart={cart}
+        user={user}/>
+      <Routes>
+        <Route path="/" element={<ProductList 
+                                  isLogged={isLogged}
+                                  amountProducts={amountProducts} 
+                                  products={products}
+                                  loading={loading}
+                                  newProductsLogain={newProductsLogain} 
+                                  error={error}
+                                  productsEnded={productsEnded}
+                                  onRequest={onRequest} 
+                                  addProductToCart={addProductToCart}/>} />
+        <Route path="/products/:productId" element={<ProductPage
+                                                      isLogged={isLogged}
+                                                      amountProducts={amountProducts}
+                                                      addProductToCart={addProductToCart} />} />
+        <Route path="/about" element={<About/>}/>
+        <Route path="*" element={<Page404/>}/>
+      </Routes>
+      {isModalLoginOpen ? <LogModal 
+                            toggelOpenModal={toggelOpenModal}
+                            setUser={setUser}
+                            toggleLogin={toggleLogin}/> : 
+                          null}
+    </div>
   )
 }
 
