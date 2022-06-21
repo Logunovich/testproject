@@ -2,18 +2,9 @@ import styles from './header.module.css';
 import { Link } from 'react-router-dom';
 
 import Button from '../button';
+import UserBlock from '../userBlock';
 
-const Header = ({isLogged, toggelOpenModal, toggleLogin, cart}) => {
-  const cartBlock = (
-    <div className={styles.cart__block}>
-    <div className={styles.count__products}>
-      Товаров в корзине: <span className={styles.product__cart}>{cart.amount}</span>
-    </div>
-    <div className={styles.count__price}>
-      На сумму: <span className={styles.price__cart}>${cart.sum}</span>
-    </div>
-  </div>
-  )
+const Header = ({isLogged, toggelOpenModal, toggleLogin, cart, user}) => {
   
   return (
     <div className={styles.header}>
@@ -25,10 +16,13 @@ const Header = ({isLogged, toggelOpenModal, toggleLogin, cart}) => {
           <Link to="/about">О магазине</Link>
         </nav>
       </div>
-      {isLogged ? cartBlock : null}
-      <Button
-        value={isLogged ? 'Выйти' : 'Войти'}
-        handle={isLogged ? toggleLogin : toggelOpenModal}/>
+      {!isLogged ? <Button
+                    value={'Войти'}
+                    handle={toggelOpenModal}/> : 
+                   <UserBlock 
+                    user={user}
+                    cart={cart}
+                    toggleLogin={toggleLogin}/>}
     </div>
   )
 }

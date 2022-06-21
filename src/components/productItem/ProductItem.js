@@ -23,7 +23,7 @@ const ProductItem = ({img, title, price, id, isLogged, amount, addProductToCart}
         <Link to={`/products/${id}`}>{title}</Link>
       </div>
       <div className={styles.product__img}>
-        <img src={img || defaultImg} alt={title} />
+        <img src={img.includes('image') ? img : defaultImg} alt={title} />
       </div>
       <div className={styles.product__price}>
         ${price}

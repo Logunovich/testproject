@@ -1,6 +1,7 @@
 class UserService {
     _apiUsers = 'https://api.escuelajs.co/api/v1/users';
     _apiLogin = 'https://api.escuelajs.co/api/v1/auth/login';
+    _apiLoginWithSession = 'https://api.escuelajs.co/api/v1/auth/profile';
   
     getResource = async (url) => {
       let res = await fetch(url);
@@ -31,6 +32,18 @@ class UserService {
         });
         return await response.json(); 
       }
+
+    getUserWithSession = async (token, url = this._apiLoginWithSession) => {
+      const response = await fetch(url, {
+        method: 'GET',
+        contentType: 'application/json',
+        headers: {
+        'Authorization': `Bearer ${token}`
+        }
+      });
+      return await response.json(); 
+    }
+
   }
   
   export default UserService;

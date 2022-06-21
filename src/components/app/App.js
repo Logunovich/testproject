@@ -2,7 +2,7 @@ import styles from './app.module.css';
 
 import { useEffect, useState } from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
-
+import UserService from '../../services/UserService';
 import StoreService from "../../services/StoreService";
 import Header from "../header";
 import ProductList from "../productList";
@@ -23,6 +23,7 @@ const App = () => {
   const [newProductsLogain, setNewProductsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [productsEnded, setProductsEnded] = useState(false);
+  const [user, setUser] = useState({});
   
   const storeService = new StoreService();
 
@@ -42,6 +43,7 @@ const App = () => {
                       
   useEffect(() => {
     onRequest();
+    checkLocalStorageToken();
   }, []);
 
   const onRequest = (offsetRequest = offset, e) => {
@@ -96,38 +98,48 @@ const App = () => {
     })
   }
 
+  const checkLocalStorageToken = () => {
+    if (localStorage.getItem('andersenToken')) {
+      const newRequest = new UserService();
+      newRequest.getUserWithSession(localStorage.getItem('andersenToken'))
+              .then(setUser)
+              .catch(() => console.log('Error'))
+      toggleLogin();
+    }
+  }
+
   return (
-    <Router>
-      <div className={styles.app}>
-        <Header 
-          isLogged={isLogged}
-          toggelOpenModal={toggelOpenModal}
-          toggleLogin={toggleLogin}
-          cart={cart}/>
-        <Routes>
-          <Route path="/" element={<ProductList 
-                                    isLogged={isLogged}
-                                    amountProducts={amountProducts} 
-                                    products={products}
-                                    loading={loading}
-                                    newProductsLogain={newProductsLogain} 
-                                    error={error}
-                                    productsEnded={productsEnded}
-                                    onRequest={onRequest} 
-                                    addProductToCart={addProductToCart}/>} />
-          <Route path="/products/:productId" element={<ProductPage
-                                                        isLogged={isLogged}
-                                                        amountProducts={amountProducts}
-                                                        addProductToCart={addProductToCart} />} />
-          <Route path="/about" element={<About/>}/>
-          <Route path="*" element={<Page404/>}/>
-        </Routes>
-        {isModalLoginOpen ? <LogModal 
-                              toggelOpenModal={toggelOpenModal}
-                              toggleLogin={toggleLogin}/> : 
-                            null}
-      </div>
-    </Router>
+    <div className={styles.app}>
+      <Header 
+        isLogged={isLogged}
+        toggelOpenModal={toggelOpenModal}
+        toggleLogin={toggleLogin}
+        cart={cart}
+        user={user}/>
+      <Routes>
+        <Route path={"/"} element={<ProductList 
+                                  isLogged={isLogged}
+                                  amountProducts={amountProducts} 
+                                  products={products}
+                                  loading={loading}
+                                  newProductsLogain={newProductsLogain} 
+                                  error={error}
+                                  productsEnded={productsEnded}
+                                  onRequest={onRequest} 
+                                  addProductToCart={addProductToCart}/>} />
+        <Route path={"products/:productId"} element={<ProductPage
+                                                      isLogged={isLogged}
+                                                      amountProducts={amountProducts}
+                                                      addProductToCart={addProductToCart} />} />
+        <Route path={"about"} element={<About/>}/>
+        <Route path={"*"} element={<Page404/>}/>
+      </Routes>
+      {isModalLoginOpen ? <LogModal 
+                            toggelOpenModal={toggelOpenModal}
+                            setUser={setUser}
+                            toggleLogin={toggleLogin}/> : 
+                          null}
+    </div>
   )
 }
 
