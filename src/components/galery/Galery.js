@@ -3,6 +3,7 @@ import styles from './galery.module.css';
 import { useState } from 'react';
 
 const Galery = ({images, title}) => {
+  const defaultImg = 'https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-1.jpg';
   const [offsetImg, setOffsetImg] = useState(0);
 
   const naviBlock = images.map((_, i) => {
@@ -21,7 +22,7 @@ const Galery = ({images, title}) => {
   const allImages = images.map((item, id) => {
     return (
       <div key={id} className={styles.image__block}>
-        <img src={item} alt={title} />
+        <img src={item.includes('image') ? item : defaultImg} alt={title} />
       </div>
     )
   });

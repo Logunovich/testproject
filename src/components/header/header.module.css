@@ -34,25 +34,3 @@ a:hover {
   font-weight: bold;
 }
 
-.cart__block {
-  position: absolute;
-  right: 140px;
-  text-align: right;
-}
-
-.cart__block {
-  font-size: 14px;
-  color: rgb(163, 163, 163);
-}
-
-.product__cart {
-  color: black;
-}
-
-.price__cart {
-  color: rgb(31, 100, 31);
-}
-
-.count__price {
-  margin: 5px 0 0 0;
-}

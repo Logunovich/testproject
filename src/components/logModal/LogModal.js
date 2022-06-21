@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import UserService from '../../services/UserService';
 import Button from '../button';
 
-const LogModal = ({toggelOpenModal, toggleLogin}) => {
+const LogModal = ({toggelOpenModal, setUser, toggleLogin}) => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [errorLogin, setErrorLogin] = useState(false);
@@ -37,20 +37,25 @@ const LogModal = ({toggelOpenModal, toggleLogin}) => {
             "email": login,
             "password": password
           })
-          .then(item => loginUser(!!item.access_token))
+          .then(item => loginUser(item.access_token))
           .catch(() => console.log('Error'))
     }
 
     const loginUser = (res) => {
         setLoading(false);
-
-        if (!res) {
-            setErrorLogin(true)
-        } else {
-            toggleLogin();
-            toggelOpenModal();
+        if (res) {
+            localStorage.setItem('andersenToken', res);
             setErrorLogin(false);
-            goHome();
+            toggleLogin();
+
+            newRequest.getUserWithSession(res)
+            .then(data => {
+                setUser(data);
+                toggelOpenModal();
+            })
+            .catch(() => console.log('Error'))
+        } else {
+            setErrorLogin(true);
         }
     }
 

@@ -3,6 +3,7 @@ import styles from './app.module.css';
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import UserService from '../../services/UserService';
 import StoreService from "../../services/StoreService";
 import Header from "../header";
 import ProductList from "../productList";
@@ -23,6 +24,7 @@ const App = () => {
   const [newProductsLogain, setNewProductsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [productsEnded, setProductsEnded] = useState(false);
+  const [user, setUser] = useState({});
   
   const storeService = new StoreService();
 
@@ -42,6 +44,7 @@ const App = () => {
                       
   useEffect(() => {
     onRequest();
+    checkLocalStorageToken();
   }, []);
 
   const onRequest = (offsetRequest = offset, e) => {
@@ -96,14 +99,25 @@ const App = () => {
     })
   }
 
+  const checkLocalStorageToken = () => {
+    if (localStorage.getItem('andersenToken')) {
+      const newRequest = new UserService();
+      newRequest.getUserWithSession(localStorage.getItem('andersenToken'))
+              .then(setUser)
+              .catch(() => console.log('Error'))
+      toggleLogin();
+    }
+  }
+
   return (
-    <Router>
+    <Router basename='/'>
       <div className={styles.app}>
         <Header 
           isLogged={isLogged}
           toggelOpenModal={toggelOpenModal}
           toggleLogin={toggleLogin}
-          cart={cart}/>
+          cart={cart}
+          user={user}/>
         <Routes>
           <Route path="/" element={<ProductList 
                                     isLogged={isLogged}
@@ -124,6 +138,7 @@ const App = () => {
         </Routes>
         {isModalLoginOpen ? <LogModal 
                               toggelOpenModal={toggelOpenModal}
+                              setUser={setUser}
                               toggleLogin={toggleLogin}/> : 
                             null}
       </div>
