@@ -1,7 +1,7 @@
 import styles from './app.module.css';
 
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 import StoreService from "../../services/StoreService";
 import Header from "../header";
