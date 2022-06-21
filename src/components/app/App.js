@@ -118,7 +118,7 @@ const App = () => {
         cart={cart}
         user={user}/>
       <Routes>
-        <Route path="/" element={<ProductList 
+        <Route path={"/"} element={<ProductList 
                                   isLogged={isLogged}
                                   amountProducts={amountProducts} 
                                   products={products}
@@ -128,12 +128,12 @@ const App = () => {
                                   productsEnded={productsEnded}
                                   onRequest={onRequest} 
                                   addProductToCart={addProductToCart}/>} />
-        <Route path="/products/:productId" element={<ProductPage
+        <Route path={"products/:productId"} element={<ProductPage
                                                       isLogged={isLogged}
                                                       amountProducts={amountProducts}
                                                       addProductToCart={addProductToCart} />} />
-        <Route path="/about" element={<About/>}/>
-        <Route path="*" element={<Page404/>}/>
+        <Route path={"about"} element={<About/>}/>
+        <Route path={"*"} element={<Page404/>}/>
       </Routes>
       {isModalLoginOpen ? <LogModal 
                             toggelOpenModal={toggelOpenModal}
