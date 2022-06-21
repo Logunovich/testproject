@@ -110,7 +110,7 @@ const App = () => {
   }
 
   return (
-    <Router basename='/'>
+    <Router basename='/testproject'>
       <div className={styles.app}>
         <Header 
           isLogged={isLogged}
