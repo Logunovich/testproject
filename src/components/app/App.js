@@ -12,6 +12,7 @@ import Page404 from "../Page404";
 import Cart from '../cart';
 
 import { fetchProducts } from '../../slices/productSlice';
+import { toggleCart } from '../../slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 

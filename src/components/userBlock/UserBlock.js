@@ -4,16 +4,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import imageCart from '../../img/1413925.png';
 
 const UserBlock = ({toggleLogin, user}) => {
+
+
+  const dispatch = useDispatch();
+  const {sum, amount, isCartOpen} = useSelector(state => state.cart);
+
   const logOut = () => {
     toggleLogin();
     localStorage.removeItem('andersenToken');
+
+    if (isCartOpen) {
+      dispatch(toggleCart())
+    }
   }
 
   const defaultImg = 'https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-1.jpg';
   const img = user.avatar;
 
-  const dispatch = useDispatch();
-  const {sum, amount} = useSelector(state => state.cart);
 
   const onToggleCart = () => {
     dispatch(toggleCart())
