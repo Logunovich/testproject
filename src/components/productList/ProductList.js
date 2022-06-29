@@ -5,9 +5,7 @@ import Button from '../button';
 import Spinner from '../spinner/Spinner';
 import ErrorFetch from '../errorFetch/ErrorFetch';
 
-
 const ProductList = ({ isLogged, 
-                       amountProducts, 
                        products,
                        loading,
                        newProductsLogain,
@@ -17,6 +15,8 @@ const ProductList = ({ isLogged,
                        onRequest,
                        addProductToCart }) => {
   document.title = 'Andersen-store';
+
+  
   
   const renderProducts = () => {
     const result = products.map((item) => {
@@ -29,7 +29,6 @@ const ProductList = ({ isLogged,
           title={item.title}
           img={item.images[0]}
           id={item.id}
-          amount={amountProducts[item.id]}
           addProductToCart={addProductToCart} />
       )
     });

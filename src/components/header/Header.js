@@ -21,7 +21,6 @@ const Header = ({isLogged, toggelOpenModal, toggleLogin, cart, user}) => {
                     handle={toggelOpenModal}/> : 
                    <UserBlock 
                     user={user}
-                    cart={cart}
                     toggleLogin={toggleLogin}/>}
     </div>
   )

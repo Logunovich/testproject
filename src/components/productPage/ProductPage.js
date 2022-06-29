@@ -8,12 +8,17 @@ import ErrorFetch from '../errorFetch';
 import Button from '../button';
 import Galery from '../galery';
 
-const ProductPage = ({isLogged, amountProducts, addProductToCart}) => {
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../slices/cartSlice';
+
+
+const ProductPage = ({isLogged}) => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false)
   const id = useParams().productId;
   
+  const dispatch = useDispatch();
   const storeService = new StoreService();  
   
   const isLoggedInfo = (
@@ -21,18 +26,6 @@ const ProductPage = ({isLogged, amountProducts, addProductToCart}) => {
       Для добавления товара в корзину авторизуйтесь
     </div>
   );
-
-  const amounInfo = (
-    <div className={styles.product__amount}>
-      {`В наличии: ${amountProducts[id]} шт.`}
-    </div>
-  )
-
-  const noProduct = (
-    <div className={styles.no__product}>
-      Нет в наличии!
-    </div>
-  )
 
   useEffect(() => {
     onRequest();
@@ -51,6 +44,16 @@ const ProductPage = ({isLogged, amountProducts, addProductToCart}) => {
     setProduct(product);
     setLoading(false);
     document.title = product.title;
+  }
+
+  const addProductToCart = () => {
+    const {id, title, price} = product;
+    const productForCart = {
+      id, 
+      title, 
+      price
+    }
+    dispatch(addProduct(productForCart))
   }
 
   const renderProduct = () => {
@@ -74,11 +77,9 @@ const ProductPage = ({isLogged, amountProducts, addProductToCart}) => {
           <div className={styles.product__price}>
             {`$${price}`}
           </div>
-          {amountProducts[id] > 0 ? amounInfo : null}
-          {amountProducts[id] === 0 ? noProduct : 
-           isLogged ? <Button 
+          {isLogged ? <Button 
                         value={'В корзину'}
-                        handle={() => addProductToCart(id, price)} /> :
+                        handle={() => addProductToCart()} /> :
            isLoggedInfo}
         </div>
       </div>

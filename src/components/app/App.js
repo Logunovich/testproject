@@ -1,31 +1,29 @@
 import styles from './app.module.css';
 
 import { useEffect, useState } from "react";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import UserService from '../../services/UserService';
-import StoreService from "../../services/StoreService";
 import Header from "../header";
 import ProductList from "../productList";
 import About from "../about";
 import LogModal from "../logModal";
 import ProductPage from "../productPage";
 import Page404 from "../Page404";
+import Cart from '../cart';
+
+import { fetchProducts } from '../../slices/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const App = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [isModalLoginOpen, setIsModalLoginOpen] = useState(false);
   const [cart, setCart] = useState({amount: 0, sum: 0});
-  const [amountProducts, setAmountProducts] = useState({});
-  const [products, setProducts] = useState([]);
-  const [offset, setOffset] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [newProductsLogain, setNewProductsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [productsEnded, setProductsEnded] = useState(false);
   const [user, setUser] = useState({});
-  
-  const storeService = new StoreService();
+
+  const dispatch = useDispatch();
+  const {products, offset, loading, newProductsLogain, error, productsEnded} = useSelector(state => state.products);
+  const {isCartOpen} = useSelector(state => state.cart)
 
   const toggelOpenModal = () => {
     setIsModalLoginOpen((val) => {
@@ -46,55 +44,13 @@ const App = () => {
     checkLocalStorageToken();
   }, []);
 
-  const onRequest = (offsetRequest = offset, e) => {
-    e?.preventDefault();
-
-    setNewProductsLoading(true)
-
-    storeService.getAllProducts(offsetRequest)
-      .then(productsLoaded)
-      .catch(() => {
-        setLoading(false);
-        setError(true);
-      })
-  }
-
-  const getRandomNum = (min, max) => {
-    return Math.random() * (max - min) + min;
-  }
-
-  const productsLoaded = (newProducts) => {
-    if (newProducts.length < 12) {
-      setProductsEnded(true)
-    }
-
-    setProducts((oldProducts) => {
-      return [...oldProducts, ...newProducts];
-    });
-
-    setLoading(false);
-    setNewProductsLoading(false);
-
-    setOffset((offset) => {
-      return offset += 12;
-    });
-
-    newProducts.forEach(item => {
-      const randomAmount = Math.round(getRandomNum(0, 10));
-
-      setAmountProducts((amount) => {
-        return {...amount, [`${item.id}`]: randomAmount}
-      })
-    })
+  const onRequest = () => {  
+    dispatch(fetchProducts(offset));
   }
 
   const addProductToCart = (id, price) => {
     setCart((cart) => {
       return {amount: cart.amount + 1, sum: cart.sum + price}
-    })
-
-    setAmountProducts((amount) => {
-      return {...amount, [id]: amount[id] - 1}
     })
   }
 
@@ -116,10 +72,10 @@ const App = () => {
         toggleLogin={toggleLogin}
         cart={cart}
         user={user}/>
+      {isCartOpen ? <Cart/> : null}
       <Routes>
         <Route path={"/"} element={<ProductList 
                                   isLogged={isLogged}
-                                  amountProducts={amountProducts} 
                                   products={products}
                                   loading={loading}
                                   newProductsLogain={newProductsLogain} 
@@ -129,7 +85,6 @@ const App = () => {
                                   addProductToCart={addProductToCart}/>} />
         <Route path={"products/:productId"} element={<ProductPage
                                                       isLogged={isLogged}
-                                                      amountProducts={amountProducts}
                                                       addProductToCart={addProductToCart} />} />
         <Route path={"about"} element={<About/>}/>
         <Route path={"*"} element={<Page404/>}/>

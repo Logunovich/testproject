@@ -20,9 +20,11 @@ const Galery = ({images, title}) => {
   });
 
   const allImages = images.map((item, id) => {
+    // const img = item.includes('image') ? item : defaultImg;
+    const img = defaultImg;
     return (
       <div key={id} className={styles.image__block}>
-        <img src={item.includes('image') ? item : defaultImg} alt={title} />
+        <img src={img} alt={title} />
       </div>
     )
   });

@@ -1,9 +1,23 @@
 import styles from './productItem.module.css';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../slices/cartSlice';
 
 import Button from '../button';
 
-const ProductItem = ({img, title, price, id, isLogged, amount, addProductToCart}) => {
+const ProductItem = ({img, title, price, id, isLogged}) => {
+  
+  const dispatch = useDispatch();
+
+  const addProductToCart = () => {
+    const productForCart = {
+      id, 
+      title, 
+      price
+    }
+    dispatch(addProduct(productForCart))
+  }
+
   const defaultImg = 'https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-1.jpg';
   const isLoggedInfo = (
     <div className={styles.info__block}>
@@ -11,11 +25,10 @@ const ProductItem = ({img, title, price, id, isLogged, amount, addProductToCart}
     </div>
   )
 
-  const amountInfo = (
-    <div className={styles.product__amount}>
-      {`В наличии: ${amount} шт.`}
-    </div>
-  )
+
+
+  // const image = img.includes('image') ? img : defaultImg;
+  const image = defaultImg;
 
   return (
     <div className={styles.product__item}>
@@ -23,23 +36,17 @@ const ProductItem = ({img, title, price, id, isLogged, amount, addProductToCart}
         <Link to={`/products/${id}`}>{title}</Link>
       </div>
       <div className={styles.product__img}>
-        <img src={img.includes('image') ? img : defaultImg} alt={title} />
+        <img src={image} alt={title} />
       </div>
       <div className={styles.product__price}>
         ${price}
       </div>
       <div>
         {!isLogged ? isLoggedInfo : 
-         amount > 0 ? <Button 
-                        value={'В корзину'}
-                        handle={() => addProductToCart(id, price)}/> : 
-         <div className={styles.product__noproduct}>
-           Нет в наличии!
-         </div> }
+          <Button 
+            value={'В корзину'}
+            handle={() => addProductToCart(id, price)}/>}
       </div>
-        {!isLogged ? null :
-         amount > 0 ? amountInfo : 
-         null}
     </div>
   )
 }
